@@ -1,0 +1,28 @@
+import time
+import os
+import sounddevice as sd
+from scipy.io.wavfile import write
+
+def main(f_num):
+	fs = 16000  #sample rate
+	seconds = 1 #duration of recording
+
+	myrecording = sd.rec(int(seconds*fs), samplerate = fs, channels = 1)
+	sd.wait() #waiting until the record is finished
+	print(len(myrecording))
+	filename = 'nga_000'+str(f_num)+'.wav'
+	write(filename, fs, myrecording) #saving as a wav file
+
+		
+if __name__=='__main__':
+	f_name = [os.path.splitext(f)[0] for f in os.listdir()  if f.endswith('.wav') ] #file name
+	f_num = [int(val[-5:]) for val in f_name ] #file number 
+	num = max(f_num) + 1
+	main(num)
+			
+				
+				
+				
+				
+				
+				
